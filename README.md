@@ -23,9 +23,3 @@ ERD
 * **Framework:** Laravel 13 (Laravel Installer 5.25.1)
 * **Language:** PHP 8.3
 * **Database:** SQLite
-    // Inverse relationship back to Property
-    public function property()
-    {
-        return $this->belongsTo(Property::class);
-    }
-}
