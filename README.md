@@ -1,3 +1,16 @@
+# TO DO
+- add controllers
+      ☑️Agent
+      Property
+      Amenity
+- add UI
+      Agent
+      Property
+      Amenity
+- add access authorization
+
+---
+
 # Real Estate Listing System (for Activity 2)
 
 <img width="2964" height="1848" alt="image" src="https://github.com/user-attachments/assets/40ff4337-d472-401b-9899-76362bd01201" />
