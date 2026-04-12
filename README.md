@@ -1,13 +1,13 @@
 # TO DO
-- add controllers
+add controllers
       ☑️Agent
       Property
       Amenity
-- add UI
+add UI
       Agent
       Property
       Amenity
-- add access authorization
+add access authorization
 
 ---
 
