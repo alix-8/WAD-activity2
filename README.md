@@ -1,13 +1,21 @@
-# TO DO
-add controllers
-      ☑️Agent
-      Property
-      Amenity
-add UI
-      Agent
-      Property
-      Amenity
-add access authorization
+# Real Estate Management System - Laravel Integration
+
+## Project Progress Tracking
+
+### 1. Controllers (CRUD Logic)
+- [x] Agent Controller
+- [ ] Property Controller
+- [ ] Amenity Controller
+
+### 2. User Interface (Blade Views)
+- [ ] Agent Views (Index, Create, Edit, Show)
+- [ ] Property Views (Index, Create, Edit, Show)
+- [ ] Amenity Views (Manage List)
+
+### 3. Middleware & Security
+- [ ] Implement Admin Middleware
+- [ ] Role-based Access Control (RBAC)
+- [ ] Conditional UI (Hide/Show buttons based on Role)
 
 ---
 
