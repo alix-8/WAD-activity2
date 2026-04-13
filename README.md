@@ -4,8 +4,8 @@
 
 ### 1. Controllers (CRUD Logic)
 - [x] Agent Controller
-- [ ] Property Controller
-- [ ] Amenity Controller
+- [x] Property Controller
+- [x] Amenity Controller
 
 ### 2. User Interface (Blade Views)
 - [ ] Agent Views (Index, Create, Edit, Show)
