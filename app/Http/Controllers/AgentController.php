@@ -1,7 +1,7 @@
 <?php
 
-/*NOTE: In this file (AgentController), there is no validation for property_id because it is not required to update the agent.
-        *agent_id should be put in the PropertyController. Property belongs to Agent, not Agent belongs to Property.
+/*NOTE: In this file (AgentController), there is no validation for properties_id because it is not required to update the agent.
+        *agent_id should be put in the PropertiesController. Properties belongs to Agent, not Agent belongs to Properties.
         */
 
 namespace App\Http\Controllers;
@@ -16,7 +16,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agents = Agent::with(['property.address', 'property.amenities'])->get();
+        $agents = Agent::with(['properties.address', 'properties.amenities'])->get();
         return view('agents.index', compact('agents'));
 
     }
@@ -33,23 +33,23 @@ class AgentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:30',
-            'email' => 'required|email|max:50',
-            'phone' => 'required|string|max:20',
-        ]);
+        {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'license_no' => 'required|unique:agents,license_no', 
+                'phone_no' => 'required',
+            ]);
 
-        $agent = Agent::create($request->all());
-        return redirect()->route('agents.show', $agent->property_id);
-    }
+            $agent = Agent::create($request->all());
+            return redirect()->route('agents.index')->with('success', 'Agent added successfully!');
+        }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $agent = Agent::with(['property.address', 'property.amenities'])->findOrFail($id);
+        $agent = Agent::with(['properties.address', 'properties.amenities'])->findOrFail($id);
         return view('agents.show', compact('agent'));
     }
 
@@ -58,7 +58,8 @@ class AgentController extends Controller
      */
     public function edit(string $id)
     {
-        $agent = Agent::with(['property.address', 'property.amenities'])->findOrFail($id);
+        $agents = Agent::all();
+        $agent = Agent::with(['properties.address', 'properties.amenities'])->findOrFail($id);
         return view('agents.edit', compact('agent'));
     }
 
@@ -69,13 +70,13 @@ class AgentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:30',
-            'email' => 'required|email|max:50',
-            'phone' => 'required|string|max:20',
+            'license_no' => 'required|string|max:6',
+            'phone_no' => 'required|string|max:20',
         ]);
 
         $agent = Agent::findOrFail($id);
         $agent->update($request->all());
-        return redirect()->route('agents.show', $agent);
+        return redirect()->route('agents.show', $agent->id)->with('success', 'Agent updated successfully!');
     }
 
     /**
