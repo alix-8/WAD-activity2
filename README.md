@@ -8,7 +8,7 @@
 - [x] Amenity Controller
 
 ### 2. User Interface (Blade Views)
-- [ ] Agent Views (Index, Create, Edit, Show)
+- [x] Agent Views (Index, Create, Edit, Show)
 - [ ] Property Views (Index, Create, Edit, Show)
 - [ ] Amenity Views (Manage List)
 
