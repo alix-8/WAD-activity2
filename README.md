@@ -1,3 +1,24 @@
+# Real Estate Management System - Laravel Integration
+
+## TO-DOs
+
+### 1. Controllers (CRUD Logic)
+- [x] Agent Controller
+- [ ] Property Controller
+- [ ] Amenity Controller
+
+### 2. User Interface (Blade Views)
+- [ ] Agent Views (Index, Create, Edit, Show)
+- [ ] Property Views (Index, Create, Edit, Show)
+- [ ] Amenity Views (Manage List)
+
+### 3. Middleware & Security
+- [ ] Implement Admin Middleware
+- [ ] Role-based Access Control (RBAC)
+- [ ] Conditional UI (Hide/Show buttons based on Role)
+
+---
+
 # Real Estate Listing System (for Activity 2)
 
 <img width="2964" height="1848" alt="image" src="https://github.com/user-attachments/assets/40ff4337-d472-401b-9899-76362bd01201" />
