@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Amenity;
+use App\Models\Property;
 
 class AmenityController extends Controller
 {
@@ -13,7 +14,8 @@ class AmenityController extends Controller
     public function index()
     {
         $amenities = Amenity::all();
-        return view('amenities.index', compact('amenities'));
+        $properties = Property::all();
+        return view('amenities.index', compact('amenities', 'properties'));
     }
 
     /**
@@ -21,7 +23,9 @@ class AmenityController extends Controller
      */
     public function create()
     {
-        return view('amenities.create');
+        $properties = Property::all();
+        $amenities = Amenity::all();
+        return view('amenities.create', compact('amenities', 'properties'));
     }
 
     /**
@@ -34,7 +38,7 @@ class AmenityController extends Controller
         ]);
 
         $amenity = Amenity::create($request->all());
-        return redirect()->route('amenities.show', $amenity->id)->with('success', 'Amenity created successfully.');
+        return redirect()->route('amenities.index', $amenity->id)->with('success', 'Amenity created successfully.');
     }
 
     /**
@@ -42,8 +46,9 @@ class AmenityController extends Controller
      */
     public function show(string $id)
     {
-        $amenity = Amenity::findOrFail($id);
-        return view('amenities.show', compact('amenity'));
+        // $amenity = Amenity::findOrFail($id);
+        // $properties = Property::all();
+        // return view('amenities.show', compact('amenity', 'properties'));
     }
 
     /**
@@ -51,8 +56,9 @@ class AmenityController extends Controller
      */
     public function edit(string $id)
     {
-        $amenity = Amenity::findOrFail($id);
-        return view('amenities.edit', compact('amenity'));
+        // $amenity = Amenity::findOrFail($id);
+        // $properties = Property::all();
+        // return view('amenities.edit', compact('amenity', 'properties'));
     }
 
     /**
@@ -60,16 +66,16 @@ class AmenityController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:50',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:50',
+        // ]);
 
-        $amenity = Amenity::findOrFail($id);
-        if(!auth()->user()->is_admin) {
-            abort(403, 'Only Admins can update amenities.');
-        }
-        $amenity->update($request->all());
-        return redirect()->route('amenities.show', $amenity->id);
+        // $amenity = Amenity::findOrFail($id);
+        // if(!auth()->user()->is_admin) {
+        //     abort(403, 'Only Admins can update amenities.');
+        // }
+        // $amenity->update($request->all());
+        // return redirect()->route('amenities.show', $amenity->id);
     }
 
     /**

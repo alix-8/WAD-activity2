@@ -69,6 +69,29 @@
                         </div>
                     </div>
 
+                    <div class="mt-6 border-t pt-4">
+                        <h3 class="text-md font-medium text-gray-700 mb-4">{{ __('Amenities') }}</h3>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            @foreach($amenities as $amenity)
+                                <div class="flex items-center">
+                                    <input type="checkbox" 
+                                        name="amenities[]" 
+                                        value="{{ $amenity->id }}" 
+                                        id="amenity_{{ $amenity->id }}"
+                                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                        {{ (isset($property) && $property->amenities->contains($amenity->id)) || 
+                                            (is_array(old('amenities')) && in_array($amenity->id, old('amenities'))) ? 'checked' : '' }}>
+                                    
+                                    <label for="amenity_{{ $amenity->id }}" class="ml-2 text-sm text-gray-600">
+                                        {{ $amenity->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <x-input-error :messages="$errors->get('amenities')" class="mt-2" />
+                    </div>
+
                     <div class="flex items-center justify-end mt-4 border-t pt-4">
                         <a href="{{ route('properties.index') }}" class="text-sm text-gray-600 hover:text-gray-900 mr-4">Cancel</a>
                         <x-primary-button>

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;  
 use App\Http\Controllers\PropertyController; 
-use App\Http\Controllers\AmenityController;  
+use App\Http\Controllers\AmenityController;
+use App\Http\Controllers\AddressController; 
 use App\Http\Controllers\AgentController;    
 use Illuminate\Support\Facades\Route;
 
@@ -34,12 +36,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('properties', PropertyController::class);
+Route::resource('addresses', AddressController::class);
 Route::resource('amenities', AmenityController::class);
 Route::resource('agents', AgentController::class);
 

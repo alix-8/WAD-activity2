@@ -3,13 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['street','city','house_number','property_id'])]
 class Address extends Model
 {
-    public function property() {
-        return $this->hasOne(Property::class);
+    // Mas safe gamitin ang protected property sa ngayon
+    protected $fillable = [
+        'street',
+        'city',
+        'house_number',
+        'property_id'
+    ];
+
+    public function property(): BelongsTo
+    {
+        // Siguraduhin na ang Property model ay nasa parehong namespace (App\Models)
+        return $this->belongsTo(Property::class, 'property_id');
     }
 }

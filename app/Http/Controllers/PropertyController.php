@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\Agent;
 use App\Models\Address;
+use App\Models\Amenity;
 
 class PropertyController extends Controller
 {
@@ -28,8 +29,9 @@ class PropertyController extends Controller
         // Fetch data for the dropdowns
         $agents = Agent::all();
         $addresses = Address::all();
+        $amenities = Amenity::all();
         
-        return view('properties.create', compact('agents', 'addresses'));
+        return view('properties.create', compact('agents', 'addresses', 'amenities'));
     }
 
     /**
@@ -48,8 +50,7 @@ class PropertyController extends Controller
         ]);
 
         return \DB::transaction(function () use ($request) {
-            // 1. Create the Address first.
-            // IMPORTANT: property_id must be nullable in your migration for this to work.
+            
             $address = Address::create([
                 'street'       => $request->street,
                 'city'         => $request->city,
@@ -57,7 +58,6 @@ class PropertyController extends Controller
                 'property_id'  => null, 
             ]);
 
-            // 2. Create the Property using the Address ID we just got.
             $property = Property::create([
                 'title'      => $request->title,
                 'price'      => $request->price,
@@ -65,10 +65,13 @@ class PropertyController extends Controller
                 'agent_id'   => $request->agent_id,
                 'address_id' => $address->id, 
             ]);
-
-            // 3. Update the Address with the Property ID.
+            
             $address->update(['property_id' => $property->id]);
+            $amenities = Amenity::all();
 
+            if ($request->has('amenities')) {
+                $property->amenities()->attach($request->amenities);
+            }
             return redirect()->route('properties.index')->with('success', 'Property Created!');
         });
     }
@@ -94,7 +97,7 @@ class PropertyController extends Controller
         }
         $agents = Agent::all();
         $address = Address::find($property->address_id);
-        return view('properties.edit', compact('property','address', 'agents'));
+        return view('properties.edit', compact('property','address', 'agents', 'amenities'));
     }
 
     /**
@@ -141,6 +144,8 @@ class PropertyController extends Controller
                 ]);
             }
 
+            $amenities = Amenity::all();
+            $property->amenities()->sync($request->amenities ?? []);
             return redirect()->route('properties.show', $property->id)
                             ->with('success', 'Property and Address updated successfully!');
         });
