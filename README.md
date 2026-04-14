@@ -9,8 +9,9 @@
 
 ### 2. User Interface (Blade Views)
 - [x] Agent Views (Index, Create, Edit, Show)
-- [ ] Property Views (Index, Create, Edit, Show)
-- [ ] Amenity Views (Manage List)
+- [x] Property Views (Index, Create, Edit, Show)
+- [ ] Amenity View List
+- [ ] Address View List
 
 ### 3. Middleware & Security
 - [ ] Implement Admin Middleware
