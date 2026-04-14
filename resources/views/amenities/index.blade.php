@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            
+            @can('create', App\Models\Amenity::class)
             <div class="bg-white p-6 rounded-lg shadow-sm mb-6 border border-gray-200">
                 <h3 class="font-bold mb-4">Create New Amenity</h3>
                 <form action="{{ route('amenities.store') }}" method="POST" class="flex gap-4">
@@ -18,13 +18,15 @@
                     <x-primary-button>Save</x-primary-button>
                 </form>
             </div>
+            @endcan
+
 
             <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden border border-gray-200">
                 <table class="w-full text-left">
                     <thead class="bg-gray-50 border-b">
                         <tr>
                             <th class="px-6 py-3 text-xs font-bold uppercase text-gray-500">Name</th>
-                            <th class="px-6 py-3 text-right text-xs font-bold uppercase text-gray-500">Actions</th>
+                            <th class="px-6 py-3 text-right text-xs font-bold uppercase text-gray-500"> </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y">
@@ -35,7 +37,10 @@
                                     <form action="{{ route('amenities.destroy', $amenity->id) }}" method="POST" onsubmit="return confirm('Remove this amenity?')">
                                         @csrf
                                         @method('DELETE')
+                                        @can('delete', $amenity)
                                         <button class="text-red-600 hover:underline text-sm">Delete</button>
+                                        @endcan
+
                                     </form>
                                 </td>
                             </tr>

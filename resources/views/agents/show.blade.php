@@ -24,15 +24,19 @@
 
                         <div class="mt-8">
                             <div class="flex space-x-4">
+                                @can('update', $agent)
                                 <a href="{{ route('agents.edit', $agent->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-6 rounded shadow">
                                     Edit Agent Profile
                                 </a>
+                                @endcan
                                 <form action="{{ route('agents.destroy', $agent->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
+                                    @can('delete', $agent)
                                     <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded shadow">
                                         Delete Agent
                                     </button>
+                                    @endcan
                                 </form>
                             </div>
                         </div>

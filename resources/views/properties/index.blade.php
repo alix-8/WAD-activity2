@@ -4,9 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Property List') }}
             </h2>
+            @can('create', App\Models\Property::class)
             <a href="{{ route('properties.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm">
                 + Add New Property
             </a>
+            @endcan
         </div>
     </x-slot>
 

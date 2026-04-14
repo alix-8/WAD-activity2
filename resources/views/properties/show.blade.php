@@ -28,15 +28,20 @@
 
                         <div class="mt-8">
                             <div class="flex space-x-4">
+                                @can('update', $property)
                                 <a href="{{ route('properties.edit', $property->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-6 rounded shadow transition">
                                     Edit Property
                                 </a>
+                                @endcan
+
                                 <form action="{{ route('properties.destroy', $property->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this property?')">
                                     @csrf
                                     @method('DELETE')
+                                    @can('delete', $property)
                                     <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded shadow transition">
                                         Delete Property
                                     </button>
+                                    @endcan
                                 </form>
                             </div>
                         </div>

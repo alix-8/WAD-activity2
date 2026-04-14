@@ -7,6 +7,7 @@ use App\Models\Property;
 use App\Models\Agent;
 use App\Models\Address;
 use App\Models\Amenity;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
@@ -97,6 +98,7 @@ class PropertyController extends Controller
         }
         $agents = Agent::all();
         $address = Address::find($property->address_id);
+        $this->authorize('update', $property); // Throws 403 if not yours
         return view('properties.edit', compact('property','address', 'agents', 'amenities'));
     }
 

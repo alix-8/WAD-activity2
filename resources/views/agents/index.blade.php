@@ -4,9 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Add New Agent') }}
             </h2>
+            @can('create', App\Models\Agent::class)
             <a href="{{ route('agents.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm">
                 + Add New Agent
             </a>
+            @endcan
         </div>
     </x-slot>
 
