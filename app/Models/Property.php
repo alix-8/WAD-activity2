@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['title','price','type','agent_id'])]
+#[Fillable(['title','price','type','agent_id', 'address_id'])]
 class Property extends Model
 {
     public function amenities() {

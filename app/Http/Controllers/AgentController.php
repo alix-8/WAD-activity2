@@ -15,11 +15,14 @@ class AgentController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $agents = Agent::with(['properties.address', 'properties.amenities'])->get();
-        return view('agents.index', compact('agents'));
+        {
+            // Combine them into one smooth operation
+            $agents = Agent::with(['properties.address', 'properties.amenities'])
+                        ->latest() // Optional: puts newest agents at the top
+                        ->paginate(10);
 
-    }
+            return view('agents.index', compact('agents'));
+        }
 
     /**
      * Show the form for creating a new resource.

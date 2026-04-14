@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->decimal('price');
+            $table->decimal('price', 12, 2); // Added precision/scale for currency
             $table->string('type');
-            $table->foreignId('agent_id')->constrained();
+            $table->foreignId('agent_id')->constrained()->onDelete('cascade');
+            // Made this nullable to solve the circular dependency error
+            $table->foreignId('address_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -48,7 +48,7 @@
                                         <a href="{{ route('properties.show', $property->id) }}" class="text-blue-600 hover:underline">
                                             {{ $property->name }} 
                                         </a>
-                                        <span class="text-sm text-gray-500">- ${{ number_format($property->price) }}</span>
+                                        <span class="text-sm text-gray-500">{{ $property->title }}</span>
                                     </li>
                                 @endforeach
                             </ul>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\Agent;
+use App\Models\Address;
 
 class PropertyController extends Controller
 {
@@ -14,6 +16,7 @@ class PropertyController extends Controller
     {
         //property is plural here because we are getting all properties, not just one. (unlike in AgentController)
         $properties = Property::with(['address', 'amenities'])->get();
+        $properties = Property::paginate(10);
         return view('properties.index', compact('properties'));
     }
 
@@ -22,7 +25,11 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+        // Fetch data for the dropdowns
+        $agents = Agent::all();
+        $addresses = Address::all();
+        
+        return view('properties.create', compact('agents', 'addresses'));
     }
 
     /**
@@ -31,19 +38,39 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'agent_id' => 'required|exists:agents,id',
+            'title'        => 'required|string|max:255',
+            'price'        => 'required|numeric|min:0',
+            'type'         => 'required|string',
+            'agent_id'     => 'required|exists:agents,id', 
+            'street'       => 'required|string|max:255',
+            'city'         => 'required|string|max:255',
+            'house_number' => 'required|string|max:50',
         ]);
-        //Here, we are validating the agent_id because it is required to create a property. A property must belong to an agent. (unlike in AgentController)
 
-        $property = Property::create($request->all());
+        return \DB::transaction(function () use ($request) {
+            // 1. Create the Address first.
+            // IMPORTANT: property_id must be nullable in your migration for this to work.
+            $address = Address::create([
+                'street'       => $request->street,
+                'city'         => $request->city,
+                'house_number' => $request->house_number,
+                'property_id'  => null, 
+            ]);
 
-        if ($request->has('amenities')) {
-            $property->amenities()->sync($request->amenities); //to sync the amenities with the property : )
-        }
-        return redirect()->route('properties.show', $property->id);
+            // 2. Create the Property using the Address ID we just got.
+            $property = Property::create([
+                'title'      => $request->title,
+                'price'      => $request->price,
+                'type'       => $request->type,
+                'agent_id'   => $request->agent_id,
+                'address_id' => $address->id, 
+            ]);
+
+            // 3. Update the Address with the Property ID.
+            $address->update(['property_id' => $property->id]);
+
+            return redirect()->route('properties.index')->with('success', 'Property Created!');
+        });
     }
 
     /**
@@ -65,7 +92,9 @@ class PropertyController extends Controller
         if (auth()->id() !== $property->agent_id && !auth()->user()->is_admin) {
             abort(403, 'Unauthorized access to edit this property.');
         }
-        return view('properties.edit', compact('property'));
+        $agents = Agent::all();
+        $address = Address::find($property->address_id);
+        return view('properties.edit', compact('property','address', 'agents'));
     }
 
     /**
@@ -73,19 +102,48 @@ class PropertyController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // 1. Validate both Property and Address fields
         $request->validate([
-            'name' => 'required|string|max:50',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'agent_id' => 'required|exists:agents,id',
+            'title'        => 'required|string|max:255',
+            'price'        => 'required|numeric|min:0',
+            'type'         => 'required|string',
+            'agent_id'     => 'required|exists:agents,id', 
+            'street'       => 'required|string|max:255',
+            'city'         => 'required|string|max:255',
+            'house_number' => 'required|string|max:50',
         ]);
 
+        // 2. Find the property or fail
         $property = Property::findOrFail($id);
+
+        // 3. Authorization Check
         if (auth()->id() !== $property->agent_id && !auth()->user()->is_admin) {
             abort(403, 'Unauthorized action.');
         }
-        $property->update($request->all());
-        return redirect()->route('properties.show', $property->id);
+
+        // 4. Use a Transaction to ensure both tables update together
+        return \DB::transaction(function () use ($request, $property) {
+            
+            // Update Property details
+            $property->update([
+                'title'    => $request->title,
+                'price'    => $request->price,
+                'type'     => $request->type,
+                'agent_id' => $request->agent_id,
+            ]);
+
+            // Update Address details (via the relationship)
+            if ($property->address) {
+                $property->address->update([
+                    'street'       => $request->street,
+                    'city'         => $request->city,
+                    'house_number' => $request->house_number,
+                ]);
+            }
+
+            return redirect()->route('properties.show', $property->id)
+                            ->with('success', 'Property and Address updated successfully!');
+        });
     }
 
     /**

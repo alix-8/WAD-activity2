@@ -16,7 +16,14 @@ return new class extends Migration
             $table->string('street');
             $table->string('city');
             $table->string('house_number');
-            $table->foreignId('property_id')->unique()->constrained()->onDelete('cascade');
+            
+            //nullable na to para ma-solve yung circular dependency error ToT
+            $table->foreignId('property_id')
+                  ->nullable() 
+                  ->unique()
+                  ->constrained()
+                  ->onDelete('cascade');
+                  
             $table->timestamps();
         });
     }
