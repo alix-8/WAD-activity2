@@ -1,6 +1,6 @@
 # Real Estate Management System - Laravel Integration
 
-## TO-DOs
+## Requirements
 
 ### 1. Controllers (CRUD Logic)
 - [x] Agent Controller
@@ -10,13 +10,13 @@
 ### 2. User Interface (Blade Views)
 - [x] Agent Views (Index, Create, Edit, Show)
 - [x] Property Views (Index, Create, Edit, Show)
-- [ ] Amenity View List
-- [ ] Address View List
+- [x] Amenity View List
+- [x] Address View List
 
 ### 3. Middleware & Security
-- [ ] Implement Admin Middleware
-- [ ] Role-based Access Control (RBAC)
-- [ ] Conditional UI (Hide/Show buttons based on Role)
+- [x] Implement Admin Middleware
+- [x] Role-based Access Control (RBAC)
+- [x] Conditional UI (Hide/Show buttons based on Role)
 
 ---
 
@@ -39,6 +39,9 @@ ERD
 | **Many-to-Many (N:M)** | `Property` ↔ `Amenity` | A Property has many features/amenities (Pool, Gym); a feature can be common accross properties | `belongsToMany()` |
 
 ---
+## Functionalities to be enhanced (outside the activity requirements)
+- [ ] Constraints or limits on fill-up fields (number and character constraint)
+- [ ] Message after exucutions of CRUD
 
 ## Tech Stack & Implementation
 
