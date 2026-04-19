@@ -13,10 +13,33 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Alpine JS -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
+
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
+
             @include('layouts.navigation')
+
+            <!-- SUCCESS TOAST -->
+            <!-- @if(session('success'))
+                <div
+                    x-data="{ show: true }"
+                    x-init="setTimeout(() => show = false, 4000)"
+                    x-show="show"
+                    x-transition
+                >
+                    <span class="text-sm text-green-800 font-medium">
+                        {{ session('success') }}
+                    </span>
+
+                    <button @click="show = false" class="text-green-700 hover:text-green-900 ml-2">
+                        ✕
+                    </button>
+                </div>
+            @endif -->
 
             <!-- Page Heading -->
             @isset($header)
@@ -31,6 +54,7 @@
             <main>
                 {{ $slot }}
             </main>
+
         </div>
     </body>
 </html>
