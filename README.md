@@ -1,7 +1,7 @@
 # Real Estate Management System - Laravel Integration
 
 ## Description of the System
-The Real Estate Management System is a web-A real estate system that lists the agents of a brokerage firm and displays the properties handled by each agent, including the amenities and addresses of the properties.
+A real estate system that lists the agents of a brokerage firm and displays the properties handled by each agent, including the amenities and addresses of the properties.
 
 ---
 
