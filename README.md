@@ -5,20 +5,20 @@ A real estate system that lists the agents of a brokerage firm and displays the 
 
 ---
 
-# Lists of Implemented Features
+## Lists of Implemented Features
 
-# Core Functions
+### Core Functions
 - Supports complete CRUD operations
 - Role-based access control using login authentication
 - Ownership and permission enforcement
 - Proper database relationship implementation
   
-# Role Authorization
+### Role Authorization
 - Admin
 - Manage agents
 - Add and edit properties
 - Manage property details, amenities, and addresses
   
-# User
+### User
 - View agents
 - View properties and property details only
