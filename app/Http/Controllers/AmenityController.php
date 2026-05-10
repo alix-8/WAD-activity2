@@ -38,7 +38,8 @@ class AmenityController extends Controller
         ]);
 
         $amenity = Amenity::create($request->all());
-        return redirect()->route('amenities.index', $amenity->id)->with('success', 'Amenity created successfully.');
+        return redirect()->route('amenities.index')
+            ->with('success', 'Amenity created successfully.');
     }
 
     /**

@@ -20,6 +20,33 @@
             </div>
             @endcan
 
+            {{-- SUCCESS MESSAGE (UNIFIED STYLE) --}}
+            @if(session('success'))
+                <div
+                    x-data="{ show: true }"
+                    x-init="setTimeout(() => show = false, 4000)"
+                    x-show="show"
+                    x-transition
+                    class="mb-4 flex items-start justify-between gap-3 rounded-lg border border-green-200 bg-green-50 px-4 py-3 shadow-sm"
+                >
+                    <div class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-green-600 mt-0.5" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+
+                        <span class="text-sm text-green-800 font-medium">
+                            {{ session('success') }}
+                        </span>
+                    </div>
+
+                    <button @click="show = false" class="text-green-700 hover:text-green-900">
+                        ✕
+                    </button>
+                </div>
+            @endif
+
 
             <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden border border-gray-200">
                 <table class="w-full text-left">

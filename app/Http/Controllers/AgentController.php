@@ -38,11 +38,10 @@ class AgentController extends Controller
     public function store(Request $request)
         {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'license_no' => 'required|unique:agents,license_no', 
-                'phone_no' => 'required',
-            ]);
-
+            'name' => 'required|string|max:255',
+            'license_no' => 'required|unique:agents,license_no',
+            'phone_no' => 'required|unique:agents,phone_no',
+        ]);
             $agent = Agent::create($request->all());
             return redirect()->route('agents.index')->with('success', 'Agent added successfully!');
         }
